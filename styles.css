@@ -1,0 +1,63 @@
+@font-face {
+	font-family: 'digital-7';
+	src: url('digital-7/digital-7.ttf');
+}
+
+body {
+	font-family: 'digital-7', sans-serif;
+}
+
+div {
+	background: url("watchBlank.png") no-repeat center center;
+	position: absolute;
+	height: 600px;
+	width: 550px;
+}
+
+.AmPm {
+	z-index: 100;
+	top: 240px;
+	left: 136px;
+	position: absolute;
+	font-size: 27px;
+	font-weight: bold;
+}
+
+.day {
+	z-index: 100;
+	top: 220px;
+	left: 216px;
+	position: absolute;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+.date {
+	z-index: 100;
+	left: 370px;
+	top: 220px;
+	position: absolute;
+	font-size: 45px;
+	letter-spacing: 3px;
+	font-weight: 600;
+}
+
+.time {
+	z-index: 100;
+	top: 275px;
+	left: 155px;
+	position: absolute;
+	letter-spacing: 3px;
+	font-size: 77px;
+	font-weight: 600;
+}
+
+.sec {
+	z-index: 100;
+	left: 320px;
+	top: 297px;
+	position: absolute;
+	letter-spacing: 3px;
+	font-size: 45px;
+	font-weight: 600;
+}
