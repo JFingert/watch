@@ -2,6 +2,14 @@
 
 angular.module('watchApp', [])
 
+.config(function($httpProvider) {
+      //Enable cross domain calls
+      $httpProvider.defaults.useXDomain = true;
+
+      //Remove the header used to identify ajax call  that would prevent CORS from working
+      delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  })
+
 .controller('watchCtrl', function($scope, $interval) {
 	
 	$scope.getDate = new Date();
@@ -45,6 +53,15 @@ angular.module('watchApp', [])
 		$scope.time = hours + ':' + min;
 	});
 	
+})
+
+.controller('newsCtrl', function($scope, $http) { 
+	$http.get('http://api.nytimes.com/svc/news/v3/content/all/all/24.json?api-key=a51b149a909cc37b3144391490a132d1%3A4%3A70179039')
+		.success(function(data, status, headers, config) {
+			console.log("data, status, headers, config ", data, status, headers, config);
+		}).error(function(data, status, headers, config) {
+			console.log("ERROR! data, status, headers, config ", data, status, headers, config);
+		});
 });
 
 
