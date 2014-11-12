@@ -34,8 +34,8 @@ div {
 
 .date {
 	z-index: 100;
-	left: 370px;
-	top: 220px;
+	left: 345px;
+	top: 215px;
 	position: absolute;
 	font-size: 45px;
 	letter-spacing: 3px;
@@ -54,8 +54,8 @@ div {
 
 .sec {
 	z-index: 100;
-	left: 349px;
-	top: 297px;
+	left: 320px;
+	top: 294px;
 	position: absolute;
 	letter-spacing: 3px;
 	font-size: 45px;
