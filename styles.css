@@ -5,9 +5,11 @@
 
 body {
 	font-family: 'digital-7', sans-serif;
+	background: transparent;
 }
 
-div {
+.watch {
+	z-index: 50;
 	background: url("watchBlank.png") no-repeat center center;
 	position: absolute;
 	height: 600px;
@@ -60,4 +62,14 @@ div {
 	letter-spacing: 3px;
 	font-size: 45px;
 	font-weight: 600;
+}
+
+canvas{
+	display:block;
+	vertical-align:bottom;
+}
+
+#particles-js{
+  height:100%;
+  /*background:#b61924*/
 }
