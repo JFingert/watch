@@ -2,14 +2,6 @@
 
 angular.module('watchApp', [])
 
-.config(function($httpProvider) {
-      //Enable cross domain calls
-      $httpProvider.defaults.useXDomain = true;
-
-      //Remove the header used to identify ajax call  that would prevent CORS from working
-      delete $httpProvider.defaults.headers.common['X-Requested-With'];
-  })
-
 .controller('watchCtrl', function($scope, $interval) {
 	
 	$scope.getDate = new Date();
@@ -56,12 +48,38 @@ angular.module('watchApp', [])
 })
 
 .controller('newsCtrl', function($scope, $http) { 
-	$http.get('http://api.nytimes.com/svc/news/v3/content/all/all/24.json?api-key=a51b149a909cc37b3144391490a132d1%3A4%3A70179039')
+
+
+	$http.jsonp('http://api.nytimes.com/svc/news/v3/content/all/all.jsonp?limit=40&api-key=a51b149a909cc37b3144391490a132d1:4:70179039&callback=JSON_CALLBACK')
 		.success(function(data, status, headers, config) {
-			console.log("data, status, headers, config ", data, status, headers, config);
+			// console.log("data, status, headers, config ", data, status, headers, config);
+			$scope.news = data.results; 
 		}).error(function(data, status, headers, config) {
 			console.log("ERROR! data, status, headers, config ", data, status, headers, config);
 		});
+})
+
+.controller('weatherCtrl', function($scope, $http) {
+	function success(position) {
+		var latitude  = position.coords.latitude;
+		var longitude = position.coords.longitude;
+
+		$scope.LatLong = latitude + "," + longitude;
+
+	};
+
+	navigator.geolocation.getCurrentPosition(success);
+
+	$http.jsonp('https://api.forecast.io/forecast/8783b7b8e12ec2201c7d2e9f20666411/45.5153,-122.6658?callback=JSON_CALLBACK')
+	.success(function(data, status, headers, config) {
+		// console.log("data, status, headers, config ", data, status, headers, config);
+		$scope.temp = data.currently.temperature;
+		$scope.summary = data.currently.summary;
+		$scope.wind = data.currently.windSpeed;
+	}).error(function(data, status, headers, config) {
+		console.log("ERROR! data, status, headers, config ", data, status, headers, config);
+	});
+
 });
 
 

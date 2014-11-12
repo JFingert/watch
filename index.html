@@ -3,6 +3,7 @@
 	<title>watch</title>
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	<script src="particles.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
 </head>
 <body>
@@ -16,7 +17,19 @@
 	
 	<div class="watch"></div>
 	<div id="particles-js"></div>
-	<div ng-controller="newsCtrl"></div>
+	
+	<div class="weather" ng-controller="weatherCtrl">
+		{{temp}}/{{summary}}  Wind: {{wind}}
+	</div>
+
+	<div class="news" ng-controller="newsCtrl">
+
+		<div ng-repeat="item in news">
+			<a ng-href="{{item.url}}"><h2>{{item.title}}</h2>
+			<p>{{item.abstract}}</p></a>
+		</div>
+
+	</div>
 
 	
 	<script src="app.js"></script>
