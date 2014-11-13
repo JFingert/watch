@@ -105,3 +105,7 @@ canvas{
 .even {
 	background: #BAF4DB;
 }
+
+.small {
+	font-size: 20px;
+}

@@ -5,6 +5,7 @@
 	<script src="particles.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
 </head>
 <body>
 	<section ng-controller="watchCtrl">
@@ -19,7 +20,7 @@
 	<div id="particles-js"></div>
 	
 	<div class="weather" ng-controller="weatherCtrl">
-		{{temp}}/{{summary}}  Wind: {{wind}}
+		{{temp}}/{{summary}}  Wind: {{wind}} <span class="small">{{city}}</span>
 	</div>
 
 	<div class="news" ng-controller="newsCtrl">

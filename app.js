@@ -65,6 +65,7 @@ angular.module('watchApp', [])
 		var longitude = position.coords.longitude;
 
 		$scope.LatLong = latitude + "," + longitude;
+		$scope.getCity(latitude, longitude);
 
 	};
 
@@ -79,6 +80,19 @@ angular.module('watchApp', [])
 	}).error(function(data, status, headers, config) {
 		console.log("ERROR! data, status, headers, config ", data, status, headers, config);
 	});
+
+
+  
+  var geocoder = new google.maps.Geocoder();
+
+  $scope.getCity = function (lat, long) {
+
+    var latlng = new google.maps.LatLng(lat, long);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+    	// console.log('callin geocode ', $scope.LatLong, latlng, results);
+    	$scope.city = results[5].formatted_address;
+    });
+  };
 
 });
 
