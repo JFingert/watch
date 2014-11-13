@@ -24,7 +24,7 @@
 
 	<div class="news" ng-controller="newsCtrl">
 
-		<div ng-repeat="item in news">
+		<div ng-repeat="item in news" ng-class-even="'even'">
 			<a ng-href="{{item.url}}"><h2>{{item.title}}</h2>
 			<p>{{item.abstract}}</p></a>
 		</div>

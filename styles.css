@@ -6,6 +6,7 @@
 body {
 	font-family: 'digital-7', sans-serif;
 	background: transparent;
+	margin: 0px;
 }
 
 a {
@@ -95,4 +96,12 @@ canvas{
 	margin-top: 40px;
 	background: white;
 	font-family: helvetica;
+}
+
+.news div {
+	margin-bottom: 40px;
+}
+
+.even {
+	background: #BAF4DB;
 }
