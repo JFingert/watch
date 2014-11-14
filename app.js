@@ -59,7 +59,9 @@ angular.module('watchApp', [])
 		console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
 	});
 
-		// Digg
+	//Digg
+	$scope.getDigg = function() {
+		$scope.dontDisplay = true;
 		$http.jsonp('https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://www.digg.com/rss/index.xml&num=30&callback=JSON_CALLBACK')
 		.success(function(data, status, headers, config) {
 			// var feed = data.responseData.feed;
@@ -69,45 +71,42 @@ angular.module('watchApp', [])
 		}).error(function(data, status, headers, config) {
 			console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
 		});
+	};
+
+		// Call for initial data (Digg)
+		$scope.getDigg();
 
 		//Hacker + Design News
 		$scope.getHackNews = function() {
+			$scope.dontDisplay = false;
 			$scope.hackNews = [];
 			$http.jsonp('https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://news.ycombinator.com/rss&num=30&callback=JSON_CALLBACK')
 			.success(function(data, status, headers, config) {
 				// var feed = data.responseData.feed;
 				// var array = orderBy(feed, 'publish_date');
-				$scope.hackNews.push(data.responseData.feed.entries);
-				getDesignNews();
+				$scope.news = data.responseData.feed.entries;
+				// getDesignNews();
 				console.log("hackernews  ", $scope.news);
 			}).error(function(data, status, headers, config) {
 				console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
 			});
+		}
 
-			var getDesignNews = function() {
+			$scope.getDesignNews = function() {
+				$scope.dontDisplay = false;
 				$http.jsonp('https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=https://news.layervault.com/?format=rss&num=30&callback=JSON_CALLBACK')
 				.success(function(data, status, headers, config) {
 					// var feed = data.responseData.feed;
 					// var array = orderBy(feed, 'publish_date');
-					$scope.hackNews.push(data.responseData.feed.entries);
-					$scope.news = [].concat.apply([], $scope.hackNews);
+					$scope.news = data.responseData.feed.entries;
+					// $scope.news = [].concat.apply([], $scope.hackNews);
 					console.log("designernews ", $scope.news);
 				}).error(function(data, status, headers, config) {
 					console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
 				});
 			};
 			
-		}
-
-	//Headlines
-	// $http.jsonp('http://api.feedzilla.com/v1/articles.json?callback=JSON_CALLBACK')
-	// 	.success(function(data, status, headers, config) {
-	// 		var array = orderBy(data.articles, 'publish_date');
-	// 		$scope.news = array; 			
-	// 		console.log("data, status, headers, config ", array, status, headers, config);
-	// 	}).error(function(data, status, headers, config) {
-	// 		console.log("ERROR! data, status, headers, config ", data, status, headers, config);
-	// 	});		
+		
 
 $scope.getCatNews = function(id) {
 	$http.jsonp('http://api.feedzilla.com/v1/categories/' + id + '/articles.json?callback=JSON_CALLBACK')
@@ -120,14 +119,16 @@ $scope.getCatNews = function(id) {
 	});
 };
 
-$scope.getDigg = function() {
-	$http.jsonp('https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://www.digg.com/rss/top.xml&callback=JSON_CALLBACK')
-	.success(function(data, status, headers, config) {
-		$scope.news = data.responseData.feed.entries;
-	}).error(function(data, status, headers, config) {
-		console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
-	});
-};
+
+
+// $http.jsonp('https://data.itpir.wm.edu/deflate/api.php?val=100USD1982USA&json=true&callback=JSON_CALLBACK')
+// 	.success(function(data, status, headers, config) {
+// 		console.log('money ', data);
+
+// 	}).error(function(data, status, headers, config) {
+// 		console.log("ERROR! money data, status, headers, config ", data, status, headers, config);
+// 	});
+
 
 })
 
@@ -191,7 +192,7 @@ particlesJS('particles-js', {
 		},
 		anim: {
 			enable: true,
-			speed: 2
+			speed: 3
 		}
 	},
 	interactivity: {

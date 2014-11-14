@@ -87,8 +87,9 @@ canvas{
 	position: absolute;
 	background: white;
 	/*margin: 35px 0 50px 110px;*/
-	font-size: 45px;
 	text-align: center;
+	font-size: 45px;
+	width: 100%;
 }
 
 .news {
@@ -113,6 +114,22 @@ canvas{
 	background: #BAF4DB;
 }
 
+.odd {
+	background: #DCFFF0;
+}
+
 .small {
 	font-size: 20px;
+}
+
+.svg-triangle{
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;    
+}   
+
+.svg-triangle polygon {
+  fill:#6FA78F;
+  stroke:#65b81d;
+  stroke-width:2;
 }

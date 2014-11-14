@@ -20,20 +20,21 @@
 	<div id="particles-js"></div>
 	
 	<div class="weather" ng-controller="weatherCtrl">
-		{{temp}}/{{summary}}  Wind: {{wind}} <span class="small">{{city}}</span>
+		{{temp}}/{{summary}}/Wind: {{wind}} <span class="small">{{city}}</span>
 	</div>
 
 	<div class="news" ng-controller="newsCtrl">
 		<div>
-			<a class="categories even" ng-click="getHackNews()">hackerNews</a> 
-			<a class="categories" ng-click="getDigg()">digg</a> 
-			<a class='categories' ng-repeat="category in categories" ng-click="getCatNews(category.category_id)" ng-class-even="'even'">{{category.display_category_name}} </a>
+			<a class="categories even" ng-click="getHackNews()">hackerNews</a><a class="categories odd" ng-click="getDesignNews()">designNews</a><a class="categories even" ng-click="getDigg()">digg</a><a class='categories' ng-repeat="category in categories" ng-click="getCatNews(category.category_id)" ng-class-even="'even'" ng-class-odd="'odd'">{{category.english_category_name}} </a>
 		</div>
-		<div ng-repeat="item in news" ng-class-even="'even'">
+		<div ng-repeat="item in news" ng-class-even="'even'" ng-class-odd="'odd'">
+			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle">
+			  <polygon points="0,0 100,0 50,100"/>
+			</svg>
 			<a ng-if="item.summary" ng-href="{{item.url}}"><h2>{{item.title}}</h2>
 			<p>{{item.summary}}</p></a>
 			<a ng-if="item.content" ng-href="{{item.link}}"><h2>{{item.title}}</h2>
-			<p >{{item.content}}</p></a>
+			<p ng-hide="!dontDisplay">{{item.content}}</p></a>
 		</div>
 	</div>
 
