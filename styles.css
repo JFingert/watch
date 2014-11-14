@@ -88,6 +88,7 @@ canvas{
 	background: white;
 	/*margin: 35px 0 50px 110px;*/
 	font-size: 45px;
+	text-align: center;
 }
 
 .news {
@@ -96,6 +97,8 @@ canvas{
 	margin-top: 40px;
 	background: white;
 	font-family: helvetica;
+	text-align: center;
+	font-size: 40px;
 }
 
 .news div {
