@@ -10,8 +10,8 @@ angular.module('watchApp', [])
 	}, 1000);
 
 	$scope.$watch('getDate', function() {
-     
-   
+
+
 
 		var week = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 		var hours = $scope.getDate.getHours();
@@ -47,16 +47,88 @@ angular.module('watchApp', [])
 	
 })
 
-.controller('newsCtrl', function($scope, $http) { 
+.controller('newsCtrl', function($scope, $http, $filter) {
 
+	var orderBy = $filter('orderBy');
+	//Categories
+	$http.jsonp('http://api.feedzilla.com/v1/categories.json?callback=JSON_CALLBACK')
+	.success(function(data, status, headers, config) {
+		$scope.categories = data;
+		console.log("feedzilla data, status, headers, config ", data, status, headers, config);
+	}).error(function(data, status, headers, config) {
+		console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
+	});
 
-	$http.jsonp('http://api.nytimes.com/svc/news/v3/content/all/all.jsonp?limit=40&api-key=a51b149a909cc37b3144391490a132d1:4:70179039&callback=JSON_CALLBACK')
+		// Digg
+		$http.jsonp('https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://www.digg.com/rss/index.xml&num=30&callback=JSON_CALLBACK')
 		.success(function(data, status, headers, config) {
-			// console.log("data, status, headers, config ", data, status, headers, config);
-			$scope.news = data.results; 
+			// var feed = data.responseData.feed;
+			// var array = orderBy(feed, 'publish_date');
+			$scope.news = data.responseData.feed.entries;
+			console.log("digg data, status, headers, config ", data, status, headers, config);
 		}).error(function(data, status, headers, config) {
-			console.log("ERROR! data, status, headers, config ", data, status, headers, config);
+			console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
 		});
+
+		//Hacker + Design News
+		$scope.getHackNews = function() {
+			$scope.hackNews = [];
+			$http.jsonp('https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://news.ycombinator.com/rss&num=30&callback=JSON_CALLBACK')
+			.success(function(data, status, headers, config) {
+				// var feed = data.responseData.feed;
+				// var array = orderBy(feed, 'publish_date');
+				$scope.hackNews.push(data.responseData.feed.entries);
+				getDesignNews();
+				console.log("hackernews  ", $scope.news);
+			}).error(function(data, status, headers, config) {
+				console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
+			});
+
+			var getDesignNews = function() {
+				$http.jsonp('https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=https://news.layervault.com/?format=rss&num=30&callback=JSON_CALLBACK')
+				.success(function(data, status, headers, config) {
+					// var feed = data.responseData.feed;
+					// var array = orderBy(feed, 'publish_date');
+					$scope.hackNews.push(data.responseData.feed.entries);
+					$scope.news = [].concat.apply([], $scope.hackNews);
+					console.log("designernews ", $scope.news);
+				}).error(function(data, status, headers, config) {
+					console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
+				});
+			};
+			
+		}
+
+	//Headlines
+	// $http.jsonp('http://api.feedzilla.com/v1/articles.json?callback=JSON_CALLBACK')
+	// 	.success(function(data, status, headers, config) {
+	// 		var array = orderBy(data.articles, 'publish_date');
+	// 		$scope.news = array; 			
+	// 		console.log("data, status, headers, config ", array, status, headers, config);
+	// 	}).error(function(data, status, headers, config) {
+	// 		console.log("ERROR! data, status, headers, config ", data, status, headers, config);
+	// 	});		
+
+$scope.getCatNews = function(id) {
+	$http.jsonp('http://api.feedzilla.com/v1/categories/' + id + '/articles.json?callback=JSON_CALLBACK')
+	.success(function(data, status, headers, config) {
+		var array = orderBy(data.articles, 'publish_date');
+		$scope.news = array;
+		console.log("feedzilla data, status, headers, config ", array, status, headers, config);
+	}).error(function(data, status, headers, config) {
+		console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
+	});
+};
+
+$scope.getDigg = function() {
+	$http.jsonp('https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://www.digg.com/rss/top.xml&callback=JSON_CALLBACK')
+	.success(function(data, status, headers, config) {
+		$scope.news = data.responseData.feed.entries;
+	}).error(function(data, status, headers, config) {
+		console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
+	});
+};
+
 })
 
 .controller('weatherCtrl', function($scope, $http) {
@@ -82,52 +154,52 @@ angular.module('watchApp', [])
 	});
 
 
-  
-  var geocoder = new google.maps.Geocoder();
 
-  $scope.getCity = function (lat, long) {
+	var geocoder = new google.maps.Geocoder();
 
-    var latlng = new google.maps.LatLng(lat, long);
-    geocoder.geocode({'latLng': latlng}, function(results, status) {
+	$scope.getCity = function (lat, long) {
+
+		var latlng = new google.maps.LatLng(lat, long);
+		geocoder.geocode({'latLng': latlng}, function(results, status) {
     	// console.log('callin geocode ', $scope.LatLong, latlng, results);
     	$scope.city = results[5].formatted_address;
     });
-  };
+	};
 
 });
 
 
 particlesJS('particles-js', {
-    particles: {
-        color: '#1638A3',
-        shape: 'circle',
-        opacity: 1,
-        size: 2.5,
-        size_random: true,
-        nb: 100,
-        line_linked: {
-            enable_auto: true,
-            distance: 250,
-            color: '#1638A3',
-            opacity: 0.5,
-            width: 1,
-            condensed_mode: {
-                enable: false,
-                rotateX: 600,
-                rotateY: 600
-            }
-        },
-        anim: {
-            enable: true,
-            speed: 2
-        }
-    },
-    interactivity: {
-        enable: true,
-        mouse: {
-            distance: 200
-        },
-        mode: 'grab'
-    },
-    retina_detect: true
+	particles: {
+		color: '#1638A3',
+		shape: 'circle',
+		opacity: 1,
+		size: 2.5,
+		size_random: true,
+		nb: 100,
+		line_linked: {
+			enable_auto: true,
+			distance: 250,
+			color: '#1638A3',
+			opacity: 0.5,
+			width: 1,
+			condensed_mode: {
+				enable: false,
+				rotateX: 600,
+				rotateY: 600
+			}
+		},
+		anim: {
+			enable: true,
+			speed: 2
+		}
+	},
+	interactivity: {
+		enable: true,
+		mouse: {
+			distance: 200
+		},
+		mode: 'grab'
+	},
+	retina_detect: true
 });

@@ -24,12 +24,17 @@
 	</div>
 
 	<div class="news" ng-controller="newsCtrl">
-
-		<div ng-repeat="item in news" ng-class-even="'even'">
-			<a ng-href="{{item.url}}"><h2>{{item.title}}</h2>
-			<p>{{item.abstract}}</p></a>
+		<div>
+			<a class="categories even" ng-click="getHackNews()">hackerNews</a> 
+			<a class="categories" ng-click="getDigg()">digg</a> 
+			<a class='categories' ng-repeat="category in categories" ng-click="getCatNews(category.category_id)" ng-class-even="'even'">{{category.display_category_name}} </a>
 		</div>
-
+		<div ng-repeat="item in news" ng-class-even="'even'">
+			<a ng-if="item.summary" ng-href="{{item.url}}"><h2>{{item.title}}</h2>
+			<p>{{item.summary}}</p></a>
+			<a ng-if="item.content" ng-href="{{item.link}}"><h2>{{item.title}}</h2>
+			<p >{{item.content}}</p></a>
+		</div>
 	</div>
 
 	
