@@ -31,9 +31,9 @@
 			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle">
 			  <polygon points="0,0 100,0 50,100"/>
 			</svg>
-			<a ng-if="item.summary" ng-href="{{item.url}}"><h2>{{item.title}}</h2>
+			<a ng-if="item.summary" ng-href="{{item.url}}" target="_blank"><h2>{{item.title}}</h2>
 			<p>{{item.summary}}</p></a>
-			<a ng-if="item.content" ng-href="{{item.link}}"><h2>{{item.title}}</h2>
+			<a ng-if="item.content" ng-href="{{item.link}}" target="_blank"><h2>{{item.title}}</h2>
 			<p ng-hide="!dontDisplay">{{item.content}}</p></a>
 		</div>
 	</div>
