@@ -19,7 +19,7 @@ angular.module('watchApp', [])
 		$scope.sec = $scope.getDate.getSeconds();
 		$scope.date = $scope.getDate.getDate();
 		$scope.day = week[$scope.getDate.getDay()];
-
+		console.log("hours ", hours);
 		
 		if ($scope.sec < 10) {
 			$scope.sec = '0' + $scope.sec;
@@ -29,14 +29,19 @@ angular.module('watchApp', [])
 			min = '0' + min;
 		}
 
-		if (hours > 12) {
+		if (hours > 11) {
 			$scope.AmPm = 'PM';
+		}  
+		if (hours < 11) {
+			$scope.AmPm = 'AM';
+		}
+		
+		if (hours > 12) {
 			hours = hours - 12;
 			if (hours < 10) {
 				hours = '0' + hours;
 			}
 		} else {
-			$scope.AmPm = 'AM';
 			if (hours < 10) {
 				hours = '0' + hours;
 			}
