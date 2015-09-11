@@ -2,16 +2,51 @@
 
 angular.module('watchApp', [])
 
-.controller('watchCtrl', function($scope, $interval) {
-	
+.controller('watchCtrl', function($scope, $interval, $timeout, $window, $document) {
+	var html = document.documentElement,
+		body = document.body,
+		bodyHeight,
+		height_25,
+		height_50,
+		height_75,
+		scrollPosition = 0,
+		reached25 = false,
+		reached50 = false,
+		reached75 = false,
+		reached100 = false;
+
+		$timeout(function() {
+			bodyHeight = Math.max(
+		        document.documentElement.clientHeight,
+		        document.body.scrollHeight,
+		        document.documentElement.scrollHeight,
+		        document.body.offsetHeight,
+		        document.documentElement.offsetHeight
+		    ),
+			height_25 = bodyHeight * 0.25,
+			height_50 = bodyHeight * 0.5,
+			height_75 = bodyHeight * 0.75;
+			scrollLoop();
+		}, 4000);
+
+		
+
 	$scope.getDate = new Date();
 	var refresh = $interval(function() {
 		$scope.getDate = new Date();
 	}, 1000);
 
 	$scope.$watch('getDate', function() {
-
-
+		bodyHeight = Math.max(
+	        document.documentElement.clientHeight,
+	        document.body.scrollHeight,
+	        document.documentElement.scrollHeight,
+	        document.body.offsetHeight,
+	        document.documentElement.offsetHeight
+	    ),
+		height_25 = bodyHeight * 0.25,
+		height_50 = bodyHeight * 0.5,
+		height_75 = bodyHeight * 0.75;
 
 		var week = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 		var hours = $scope.getDate.getHours();
@@ -19,7 +54,7 @@ angular.module('watchApp', [])
 		$scope.sec = $scope.getDate.getSeconds();
 		$scope.date = $scope.getDate.getDate();
 		$scope.day = week[$scope.getDate.getDay()];
-		console.log("hours ", hours);
+		// console.log("hours ", hours);
 		
 		if ($scope.sec < 10) {
 			$scope.sec = '0' + $scope.sec;
@@ -48,8 +83,49 @@ angular.module('watchApp', [])
 		}
 
 		$scope.time = hours + ':' + min;
+
+		
 	});
-	
+
+	function scrollLoop() {
+		var scrollTop = $window.pageYOffset;
+
+		if (scrollTop >= height_25 && scrollTop < height_50) {
+			if (!reached25) {
+				reached25 = true;
+				sendScrollDepthEvent('25');
+			}
+		}
+
+		if (scrollTop >= height_50 && scrollTop < height_75) {
+			if (!reached50) {
+				reached50 = true;
+				sendScrollDepthEvent('50');
+			}
+		}
+
+		if (scrollTop >= height_75 && scrollTop < bodyHeight) {
+			if (!reached75) {
+				reached75 = true;
+				sendScrollDepthEvent('75');
+			}
+		}
+
+		if (scrollTop >= (bodyHeight - 750)) {
+			if (!reached100) {
+				reached100 = true;
+				sendScrollDepthEvent('100');
+			}
+		}
+
+
+		function sendScrollDepthEvent(value) {
+			console.log(value);
+			ga('send', 'event', 'scroll-depth', value);
+		}
+
+		window.requestAnimationFrame(scrollLoop);
+	}
 })
 
 .controller('newsCtrl', function($scope, $http, $filter) {
@@ -59,7 +135,7 @@ angular.module('watchApp', [])
 	$http.jsonp('http://api.feedzilla.com/v1/categories.json?callback=JSON_CALLBACK')
 	.success(function(data, status, headers, config) {
 		$scope.categories = data;
-		console.log("feedzilla data, status, headers, config ", data, status, headers, config);
+		// console.log("feedzilla data, status, headers, config ", data, status, headers, config);
 	}).error(function(data, status, headers, config) {
 		console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
 	});
@@ -72,7 +148,8 @@ angular.module('watchApp', [])
 			// var feed = data.responseData.feed;
 			// var array = orderBy(feed, 'publish_date');
 			$scope.news = data.responseData.feed.entries;
-			console.log("digg data, status, headers, config ", data, status, headers, config);
+
+			// console.log("digg data, status, headers, config ", data, status, headers, config);
 		}).error(function(data, status, headers, config) {
 			console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
 		});
@@ -91,7 +168,7 @@ angular.module('watchApp', [])
 				// var array = orderBy(feed, 'publish_date');
 				$scope.news = data.responseData.feed.entries;
 				// getDesignNews();
-				console.log("hackernews  ", $scope.news);
+				// console.log("hackernews  ", $scope.news);
 			}).error(function(data, status, headers, config) {
 				console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
 			});
@@ -105,7 +182,7 @@ angular.module('watchApp', [])
 					// var array = orderBy(feed, 'publish_date');
 					$scope.news = data.responseData.feed.entries;
 					// $scope.news = [].concat.apply([], $scope.hackNews);
-					console.log("designernews ", $scope.news);
+					// console.log("designernews ", $scope.news);
 				}).error(function(data, status, headers, config) {
 					console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
 				});
@@ -118,7 +195,7 @@ $scope.getCatNews = function(id) {
 	.success(function(data, status, headers, config) {
 		var array = orderBy(data.articles, 'publish_date');
 		$scope.news = array;
-		console.log("feedzilla data, status, headers, config ", array, status, headers, config);
+		// console.log("feedzilla data, status, headers, config ", array, status, headers, config);
 	}).error(function(data, status, headers, config) {
 		console.log("ERROR! feedzilla data, status, headers, config ", data, status, headers, config);
 	});
