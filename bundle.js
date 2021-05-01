@@ -157,7 +157,7 @@ angular.module('watchApp', [])
 	};
 
 		// Call for initial data (Digg)
-		$scope.getDigg();
+		//$scope.getDigg();
 
 		//Hacker + Design News
 		$scope.getHackNews = function() {
@@ -245,7 +245,7 @@ $scope.getCatNews = function(id) {
 
 		var latlng = new google.maps.LatLng(lat, long);
 		geocoder.geocode({'latLng': latlng}, function(results, status) {
-    	// console.log('callin geocode ', $scope.LatLong, latlng, results);
+    	console.log('callin geocode ', $scope.LatLong, latlng, results);
     	$scope.city = results[5].formatted_address;
     });
 	};
