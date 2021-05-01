@@ -15,19 +15,19 @@ angular.module('watchApp', [])
 		reached75 = false,
 		reached100 = false;
 
-		$timeout(function() {
-			bodyHeight = Math.max(
-		        document.documentElement.clientHeight,
-		        document.body.scrollHeight,
-		        document.documentElement.scrollHeight,
-		        document.body.offsetHeight,
-		        document.documentElement.offsetHeight
-		    ),
-			height_25 = bodyHeight * 0.25,
-			height_50 = bodyHeight * 0.5,
-			height_75 = bodyHeight * 0.75;
-			scrollLoop();
-		}, 4000);
+		// $timeout(function() {
+		// 	bodyHeight = Math.max(
+		//         document.documentElement.clientHeight,
+		//         document.body.scrollHeight,
+		//         document.documentElement.scrollHeight,
+		//         document.body.offsetHeight,
+		//         document.documentElement.offsetHeight
+		//     ),
+		// 	height_25 = bodyHeight * 0.25,
+		// 	height_50 = bodyHeight * 0.5,
+		// 	height_75 = bodyHeight * 0.75;
+		// 	scrollLoop();
+		// }, 4000);
 
 		
 
