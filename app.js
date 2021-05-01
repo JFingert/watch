@@ -220,21 +220,26 @@ $scope.getCatNews = function(id) {
 		var longitude = position.coords.longitude;
 
 		$scope.LatLong = latitude + "," + longitude;
+		$scope.getForecast();
 		$scope.getCity(latitude, longitude);
 
 	};
 
 	navigator.geolocation.getCurrentPosition(success);
 
-	$http.jsonp('https://api.forecast.io/forecast/8783b7b8e12ec2201c7d2e9f20666411/' + $scope.LatLong + '?callback=JSON_CALLBACK')
-	.success(function(data, status, headers, config) {
-		// console.log("data, status, headers, config ", data, status, headers, config);
-		$scope.temp = data.currently.temperature;
-		$scope.summary = data.currently.summary;
-		$scope.wind = data.currently.windSpeed;
-	}).error(function(data, status, headers, config) {
-		console.log("ERROR! data, status, headers, config ", data, status, headers, config);
-	});
+	$scope.getForecast = function() {
+
+		$http.jsonp('https://api.forecast.io/forecast/8783b7b8e12ec2201c7d2e9f20666411/' + $scope.LatLong + '?callback=JSON_CALLBACK')
+		.success(function(data, status, headers, config) {
+			// console.log("data, status, headers, config ", data, status, headers, config);
+			$scope.temp = data.currently.temperature;
+			$scope.summary = data.currently.summary;
+			$scope.wind = data.currently.windSpeed;
+		}).error(function(data, status, headers, config) {
+			console.log("ERROR! data, status, headers, config ", data, status, headers, config);
+		});
+	}
+
 
 
 
