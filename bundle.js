@@ -222,7 +222,7 @@ $scope.getCatNews = function(id) {
 
 		$scope.LatLong = latitude + "," + longitude;
 		$scope.getForecast();
-		$scope.getCity(latitude, longitude);
+		//$scope.getCity(latitude, longitude);
 
 	};
 
@@ -244,7 +244,7 @@ $scope.getCatNews = function(id) {
 
 
 
-	var geocoder = new google.maps.Geocoder();
+	//var geocoder = new google.maps.Geocoder();
 
 	$scope.getCity = function (lat, long) {
 
