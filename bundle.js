@@ -227,7 +227,7 @@ $scope.getCatNews = function(id) {
 
 	navigator.geolocation.getCurrentPosition(success);
 
-	$http.jsonp('https://api.forecast.io/forecast/8783b7b8e12ec2201c7d2e9f20666411/' + LatLong + '?callback=JSON_CALLBACK')
+	$http.jsonp('https://api.forecast.io/forecast/8783b7b8e12ec2201c7d2e9f20666411/' + $scope.LatLong + '?callback=JSON_CALLBACK')
 	.success(function(data, status, headers, config) {
 		// console.log("data, status, headers, config ", data, status, headers, config);
 		$scope.temp = data.currently.temperature;
