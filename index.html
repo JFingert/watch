@@ -5,7 +5,7 @@
 	<script src="particles.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> 
 </head>
 <body>
 	<section ng-controller="watchCtrl">
@@ -20,10 +20,12 @@
 	<div id="particles-js"></div>
 	
 	<div class="weather" ng-controller="weatherCtrl">
+		{{}}
+
 		{{temp}}/{{summary}}/Wind: {{wind}} <span class="small">{{city}}</span>
 	</div>
 
-	<div class="news" ng-controller="newsCtrl">
+	<!-- <div class="news" ng-controller="newsCtrl">
 		<div>
 			<a class="categories even" ng-click="getHackNews()">hackerNews</a><a class="categories odd" ng-click="getDesignNews()">designNews</a><a class="categories even" ng-click="getDigg()">digg</a><a class='categories' ng-repeat="category in categories" ng-click="getCatNews(category.category_id)" ng-class-even="'even'" ng-class-odd="'odd'">{{category.english_category_name}} </a>
 		</div>
@@ -37,10 +39,9 @@
 			<p ng-hide="!dontDisplay">{{item.content}}</p></a>
 		</div>
 		<br>
-		<!-- <a href="geo:0,0?q=Small+Batch+Beer+Co.,+241+W+5th+St,+Winston-Salem,+NC+27101">Directions(android)</a><br>
-		<a href="http://maps.apple.com/?q=Small Batch Beer Co, Winston-Salem">Directions(ios)</a> -->
-	</div>
-
+		<a href="geo:0,0?q=Small+Batch+Beer+Co.,+241+W+5th+St,+Winston-Salem,+NC+27101">Directions(android)</a><br>
+		<a href="http://maps.apple.com/?q=Small Batch Beer Co, Winston-Salem">Directions(ios)</a>
+	</div> -->
 	
 	<script src="app.js"></script>
 	<script>
